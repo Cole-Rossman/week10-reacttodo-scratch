@@ -13,7 +13,7 @@ export default function TodoList() {
         setTodos(todosData);
         setLoading(false);
       } catch (e) {
-        setError('An error has occured, please try again.');
+        setError('An error has occurred, please try again.');
       }
     };
     fetchData();
@@ -22,6 +22,15 @@ export default function TodoList() {
   if (loading) return <h1>Loading...</h1>;
 
   return (
-    <div>todoList</div>
+    <div>
+      <h1>ToDo list!</h1>
+      {error && <p>{error}</p>}
+      <div className='todos-list'>
+        {todos.map((todo) => (
+          <h3 key={todo.id}>{todo.description}</h3>
+        ))}
+      </div>
+
+    </div>
   );
 }
