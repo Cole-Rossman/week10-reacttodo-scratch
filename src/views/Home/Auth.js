@@ -1,20 +1,27 @@
 import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { signInUser, signupUser } from '../../services/users';
 import './Auth.css';
 
-export default function Auth() {
+export default function Auth({ setCurrentUser }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [type, setType] = useState('sign-in');
 
+  const history = useHistory();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       if (type === 'sign-in') {
-        await signInUser(email, password);
+        const resp = await signInUser(email, password);
+        setCurrentUser(resp.email);
+        history.push('/todos');
       } else {
-        await signupUser(email, password);
+        const resp = await signupUser(email, password);
+        setCurrentUser(resp.email);
+        history.push('/todos');
       }
     } catch (e) {
       setError('Sorry something went wrong, please try again');
