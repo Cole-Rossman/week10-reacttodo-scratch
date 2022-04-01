@@ -6,6 +6,6 @@ export async function fetchTodos() {
 }
 
 export async function createTodo(todo) {
-  const resp = await client.from('todos').insert(todo);
+  const resp = await client.from('todos').insert(todo).single();
   return checkError(resp);
 }
