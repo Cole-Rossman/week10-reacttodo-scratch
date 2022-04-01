@@ -4,7 +4,6 @@ import { fetchTodos, createTodo, updateTodo } from '../services/todos';
 export default function TodoList() {
   const [todos, setTodos] = useState([]);
   const [description, setDescription] = useState('');
-  const [complete, setComplete] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
 
@@ -23,7 +22,7 @@ export default function TodoList() {
 
   const handleSubmit = async () => {
     try {
-      const newTodo = await createTodo({ description, complete });
+      const newTodo = await createTodo({ description, complete: false });
       setTodos((prevState) => [...prevState, newTodo]);
     } catch (e) {
       setError('An error has occurred, please try again');
@@ -31,6 +30,17 @@ export default function TodoList() {
   };
 
   const handleCheckbox = async (todo) => {
+    try {
+      if (todo.complete === false) {
+        const completeTodo = await updateTodo({ id: todo.id, complete: true });
+      } else {
+        const uncheckTodo = await updateTodo({ id: todo.id, complete: false });
+      }
+      
+    } catch (e) {
+      setError('An error occurred, please try again.');
+    }
+    
     // need to update todo to be completed, after click use linethrough styling. Stretch -- unclick and return status to false.
   };
 
