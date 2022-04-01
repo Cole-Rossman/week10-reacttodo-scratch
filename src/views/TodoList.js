@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { fetchTodos, createTodo } from '../services/todos';
+import { fetchTodos, createTodo, updateTodo } from '../services/todos';
 
 export default function TodoList() {
   const [todos, setTodos] = useState([]);
@@ -30,6 +30,12 @@ export default function TodoList() {
     }
   };
 
+  const handleCheckbox = async (todo) => {
+    // need to update todo to be completed, after click use linethrough styling. Stretch -- unclick and return status to false.
+  };
+
+
+
   if (loading) return <h1>Loading...</h1>;
 
   return (
@@ -38,7 +44,10 @@ export default function TodoList() {
       {error && <p>{error}</p>}
       <div className='todos-list'>
         {todos.map((todo) => (
-          <h3 key={todo.id}>{todo.description}</h3>
+          <div key={todo.id}>
+            <input type="checkbox" onClick={() => handleCheckbox(todo)} />
+            <h3>{todo.description}</h3>
+          </div>
         ))}
         <div className='new-todo'>
           <label>
