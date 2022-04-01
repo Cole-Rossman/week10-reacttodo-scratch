@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { fetchTodos, createTodo, updateTodo } from '../services/todos';
+import { fetchTodos, createTodo, updateTodo } from '../../services/todos';
+import './TodoList.css';
 
 export default function TodoList() {
   const [todos, setTodos] = useState([]);
@@ -32,16 +33,16 @@ export default function TodoList() {
   const handleCheckbox = async (todo) => {
     try {
       if (todo.complete === false) {
-        const completeTodo = await updateTodo({ id: todo.id, complete: true });
+        await updateTodo({ id: todo.id, complete: true });
       } else {
-        const uncheckTodo = await updateTodo({ id: todo.id, complete: false });
+        await updateTodo({ id: todo.id, complete: false });
       }
+      const resp = await fetchTodos();
+      setTodos(resp);
       
     } catch (e) {
       setError('An error occurred, please try again.');
     }
-    
-    // need to update todo to be completed, after click use linethrough styling. Stretch -- unclick and return status to false.
   };
 
 
@@ -54,8 +55,8 @@ export default function TodoList() {
       {error && <p>{error}</p>}
       <div className='todos-list'>
         {todos.map((todo) => (
-          <div key={todo.id}>
-            <input type="checkbox" onClick={() => handleCheckbox(todo)} />
+          <div className={todo.complete === true ? 'complete' : ''} key={todo.id}>
+            <input checked={todo.complete} type="checkbox" onClick={() => handleCheckbox(todo)} />
             <h3>{todo.description}</h3>
           </div>
         ))}

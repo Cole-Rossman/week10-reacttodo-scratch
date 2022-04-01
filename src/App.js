@@ -3,7 +3,7 @@ import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import { useState } from 'react';
 
 import Auth from './views/Home/Auth';
-import TodoList from './views/TodoList';
+import TodoList from './views/TodoList/TodoList';
 import NavHeader from './components/NavHeader';
 import { getUser } from './services/users';
 
