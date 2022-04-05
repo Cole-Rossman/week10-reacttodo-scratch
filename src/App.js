@@ -17,7 +17,7 @@ function App() {
       <div className="App">
         <Switch>
           <Route exact path="/">
-            <Auth setCurrentUser={setCurrentUser}/>
+            {!currentUser ? <Auth setCurrentUser={setCurrentUser}/> : <Redirect to="/todos" /> }
           </Route>
           <Route exact path="/todos">
             {currentUser ? <TodoList /> : <Redirect to="/"/>}
